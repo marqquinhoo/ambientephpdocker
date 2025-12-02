@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  apache-php:
+    build: .
+    container_name: apache-php
+    ports:
+      - "8084:80"
+    volumes:
+      - "./var/www/html:/var/www/html"
+      - "./apache/vhosts.conf:/etc/apache2/sites-enabled/000-default.conf"
+    depends_on:
+      - db
+    networks:
+      - backend
+    restart: always
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./bancos:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    networks:
+      - backend
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+    driver: bridge

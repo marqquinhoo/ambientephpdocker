@@ -1,0 +1,4 @@
+Subir Docker: 
+docker-compose down -v
+docker volume rm ProjetosDocker_db_data
+docker-compose up --build
