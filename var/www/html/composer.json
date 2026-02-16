@@ -1,5 +1,8 @@
 {
     "require": {
-        "mercadopago/dx-php": "^3.3"
+        "mercadopago/dx-php": "^3.3",
+        "ramsey/uuid": "^4.9",
+        "robinvdvleuten/ulid": "^5.0",
+        "nivshah/simplex-calculator": "^1.0"
     }
 }
